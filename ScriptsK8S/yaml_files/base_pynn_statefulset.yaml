@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pynn-statefulset-test
+spec:
+  serviceName: pynn-headless-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pynn-headless-pod
+  template:
+    metadata:
+      labels:
+        app: pynn-headless-pod
+    spec:
+      containers:
+        - name: pynn-statetest
+          image: registry.cn-hangzhou.aliyuncs.com/lvyi/pynn:1.1.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: pynn-port
+          workingDir: /home/containerData/
+          volumeMounts:
+            - name: pynn
+              mountPath: /home/containerData/
+  volumeClaimTemplates:       #> 自动创建PVC，为后端的Pod提供专有的存储。**
+    - metadata:
+        name: pynn
+        annotations:           #这是指定storageclass
+          volume.beta.kubernetes.io/storage-class: stateful-nfs
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

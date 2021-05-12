@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pynn
+  name: pynn-deployment-
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pynn
+  template:
+    metadata:
+      labels:
+        app: pynn
+      name: pynn
+    spec:
+      containers:
+        - image: registry.cn-hangzhou.aliyuncs.com/lvyi/pynn:1.1.2
+          name: pynn-

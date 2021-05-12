@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pynn-headless-svc
+  labels:
+      app: pynn-headless-svc
+spec:
+  ports:
+    - port: 80
+      name: pynn-headless-port
+  clusterIP: None
+  selector:
+      app: pynn-headless-pod
