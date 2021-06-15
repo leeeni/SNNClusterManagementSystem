@@ -1,0 +1,35 @@
+"filename", "language", "Go", "XML", "Ini", "YAML", "Markdown", "Docker", "Shell Script", "comment", "blank", "total"
+"c:\Boxs\Tmp\pcl\snnsAdmin\Readme.md", "Markdown", 0, 0, 0, 0, 207, 0, 0, 0, 61, 268
+"c:\Boxs\Tmp\pcl\snnsAdmin\assets\locale\en-US\default.ini", "Ini", 0, 0, 11, 0, 0, 0, 0, 0, 1, 12
+"c:\Boxs\Tmp\pcl\snnsAdmin\assets\locale\en-US\validator.ini", "Ini", 0, 0, 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Boxs\Tmp\pcl\snnsAdmin\assets\locale\zh-CN\default.ini", "Ini", 0, 0, 10, 0, 0, 0, 0, 0, 1, 11
+"c:\Boxs\Tmp\pcl\snnsAdmin\assets\locale\zh-CN\validator.ini", "Ini", 0, 0, 13, 0, 0, 0, 0, 0, 2, 15
+"c:\Boxs\Tmp\pcl\snnsAdmin\cmd\docker-compose\docker-compose.yaml", "YAML", 0, 0, 0, 24, 0, 0, 0, 0, 0, 24
+"c:\Boxs\Tmp\pcl\snnsAdmin\cmd\docker\Dockerfile", "Docker", 0, 0, 0, 0, 0, 17, 0, 0, 6, 23
+"c:\Boxs\Tmp\pcl\snnsAdmin\cmd\docker\build.sh", "Shell Script", 0, 0, 0, 0, 0, 0, 8, 1, 3, 12
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\common\error_code.go", "Go", 9, 0, 0, 0, 0, 0, 0, 0, 4, 13
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\common\main.go", "Go", 57, 0, 0, 0, 0, 0, 0, 4, 10, 71
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\node\insertnode.go", "Go", 32, 0, 0, 0, 0, 0, 0, 5, 7, 44
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\task\inserttask.go", "Go", 32, 0, 0, 0, 0, 0, 0, 5, 7, 44
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\user\login.go", "Go", 33, 0, 0, 0, 0, 0, 0, 3, 7, 43
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\user\logout.go", "Go", 12, 0, 0, 0, 0, 0, 0, 3, 6, 21
+"c:\Boxs\Tmp\pcl\snnsAdmin\controller\v1\user\register.go", "Go", 61, 0, 0, 0, 0, 0, 0, 1, 11, 73
+"c:\Boxs\Tmp\pcl\snnsAdmin\go.mod", "XML", 0, 15, 0, 0, 0, 0, 0, 0, 3, 18
+"c:\Boxs\Tmp\pcl\snnsAdmin\main.go", "Go", 25, 0, 0, 0, 0, 0, 0, 18, 9, 52
+"c:\Boxs\Tmp\pcl\snnsAdmin\repository\common.go", "Go", 31, 0, 0, 0, 0, 0, 0, 8, 9, 48
+"c:\Boxs\Tmp\pcl\snnsAdmin\repository\init.go", "Go", 25, 0, 0, 0, 0, 0, 0, 5, 9, 39
+"c:\Boxs\Tmp\pcl\snnsAdmin\repository\node.go", "Go", 34, 0, 0, 0, 0, 0, 0, 8, 9, 51
+"c:\Boxs\Tmp\pcl\snnsAdmin\repository\task.go", "Go", 32, 0, 0, 0, 0, 0, 0, 8, 9, 49
+"c:\Boxs\Tmp\pcl\snnsAdmin\repository\user.go", "Go", 54, 0, 0, 0, 0, 0, 0, 11, 12, 77
+"c:\Boxs\Tmp\pcl\snnsAdmin\route\route.go", "Go", 18, 0, 0, 0, 0, 0, 0, 0, 4, 22
+"c:\Boxs\Tmp\pcl\snnsAdmin\service\common.go", "Go", 1, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"c:\Boxs\Tmp\pcl\snnsAdmin\service\node.go", "Go", 7, 0, 0, 0, 0, 0, 0, 1, 3, 11
+"c:\Boxs\Tmp\pcl\snnsAdmin\service\session.go", "Go", 15, 0, 0, 0, 0, 0, 0, 2, 5, 22
+"c:\Boxs\Tmp\pcl\snnsAdmin\service\task.go", "Go", 7, 0, 0, 0, 0, 0, 0, 1, 3, 11
+"c:\Boxs\Tmp\pcl\snnsAdmin\service\user.go", "Go", 22, 0, 0, 0, 0, 0, 0, 4, 7, 33
+"c:\Boxs\Tmp\pcl\snnsAdmin\session\init.go", "Go", 27, 0, 0, 0, 0, 0, 0, 2, 7, 36
+"c:\Boxs\Tmp\pcl\snnsAdmin\util\i18n\init.go", "Go", 10, 0, 0, 0, 0, 0, 0, 0, 4, 14
+"c:\Boxs\Tmp\pcl\snnsAdmin\util\log\logger.go", "Go", 5, 0, 0, 0, 0, 0, 0, 0, 3, 8
+"c:\Boxs\Tmp\pcl\snnsAdmin\util\validator\init.go", "Go", 12, 0, 0, 0, 0, 0, 0, 1, 4, 17
+"c:\Boxs\Tmp\pcl\snnsAdmin\util\validator\regex.go", "Go", 14, 0, 0, 0, 0, 0, 0, 0, 6, 20
+"Total", "-", 575, 15, 47, 24, 207, 17, 8, 91, 235, 1219

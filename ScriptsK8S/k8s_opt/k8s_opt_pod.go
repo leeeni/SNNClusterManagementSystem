@@ -1,17 +1,17 @@
 package k8s_opt
 
 import (
-	"SNNClusterManagementSystem/ScriptsK8S/common"
 	"encoding/json"
 	"io/ioutil"
+	"snns_srv/ScriptsK8S/common"
+	"time"
+
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	yaml2 "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/kubernetes"
-	"time"
 )
-
 
 // 从Yaml文件中解析出Pod2对象
 func GetPodFromYaml(YamlPath string) (pod v1.Pod) {
@@ -30,24 +30,25 @@ func GetPodFromYaml(YamlPath string) (pod v1.Pod) {
 }
 
 // 创建一个新的pod
-func CreatePynnPod(clientSet *kubernetes.Clientset,  ClientName string, nameSpace string) (flag bool) {
+func CreatePynnPod(clientSet *kubernetes.Clientset, ClientName string, nameSpace string, HostPort int32) (flag bool) {
 
 	// 获取文件生成的deployment对象
 	basePod := GetPodFromYaml("./ScriptsK8S/yaml_files/base_pynn_pod.yaml")
 
-	// 修改名称
+	// 1、修改名称
 	// Pod
 	baseName := basePod.Name
 	basePod.Name = baseName + ClientName
 	// Container
 	baseName = basePod.Spec.Containers[0].Name
 	basePod.Spec.Containers[0].Name = baseName + ClientName
-	// 修改容器挂载卷目录
+	// 2、修改容器挂载卷目录
 	var baseHostPathSrc v1.HostPathVolumeSource
 	baseHostPath := "/home/work/ClientDir/" + ClientName
 	baseHostPathSrc.Path = baseHostPath
 	basePod.Spec.Volumes[0].HostPath = &baseHostPathSrc
-
+	// 3、修改主机端口
+	basePod.Spec.Containers[0].Ports[0].HostPort = HostPort
 	// 创建Pod
 	if _, err := clientSet.CoreV1().Pods(nameSpace).Get(basePod.Name, metav1.GetOptions{}); err != nil {
 		if !errors.IsNotFound(err) {
@@ -70,7 +71,7 @@ func CreatePynnPod(clientSet *kubernetes.Clientset,  ClientName string, nameSpac
 			goto RETRY
 		}
 		// 进行状态判定
-		if string(k8sPod.Status.Phase) == "Running"{
+		if string(k8sPod.Status.Phase) == "Running" {
 			// 创建完成
 			break
 		}
@@ -82,7 +83,7 @@ func CreatePynnPod(clientSet *kubernetes.Clientset,  ClientName string, nameSpac
 }
 
 // 创建一个新的pod
-func CreatePynnPodUpdateCpuAndMemory(clientSet *kubernetes.Clientset,  ClientName string, nameSpace string, cpu int64,memory int64) (flag bool) {
+func CreatePynnPodUpdateCpuAndMemory(clientSet *kubernetes.Clientset, ClientName string, nameSpace string, cpu int64, memory int64) (flag bool) {
 
 	// 获取文件生成的deployment对象
 	basePod := GetPodFromYaml("./ScriptsK8S/yaml_files/base_pynn_pod.yaml")
@@ -129,7 +130,7 @@ func CreatePynnPodUpdateCpuAndMemory(clientSet *kubernetes.Clientset,  ClientNam
 			goto RETRY
 		}
 		// 进行状态判定
-		if string(k8sPod.Status.Phase) == "Running"{
+		if string(k8sPod.Status.Phase) == "Running" {
 			// 创建完成
 			break
 		}
@@ -152,7 +153,7 @@ func DeleteSpecPod(clientSet *kubernetes.Clientset, PodName string, nameSpace st
 		panic("Pods doesnt exist")
 	} else {
 		// 已存在则删除
-		if err := clientSet.CoreV1().Pods(nameSpace).Delete(PodName,&metav1.DeleteOptions{}); err != nil {
+		if err := clientSet.CoreV1().Pods(nameSpace).Delete(PodName, &metav1.DeleteOptions{}); err != nil {
 			flag = false
 			panic(err)
 		}
@@ -161,7 +162,7 @@ func DeleteSpecPod(clientSet *kubernetes.Clientset, PodName string, nameSpace st
 	// 保证完全删除，能获取说明还存在
 	for {
 		// 服务器上不存在，则退出
-		if _, err := clientSet.CoreV1().Pods(nameSpace).Get(PodName, metav1.GetOptions{});err != nil{
+		if _, err := clientSet.CoreV1().Pods(nameSpace).Get(PodName, metav1.GetOptions{}); err != nil {
 			break
 		}
 		time.Sleep(1 * time.Millisecond)
@@ -171,21 +172,21 @@ func DeleteSpecPod(clientSet *kubernetes.Clientset, PodName string, nameSpace st
 }
 
 // 获取指定命名空间中的所有Pod
-func GetSpecAllPod(clientSet *kubernetes.Clientset, nameSpace string) (pod * v1.PodList) {
+func GetSpecAllPod(clientSet *kubernetes.Clientset, nameSpace string) (pod *v1.PodList) {
 	podList, err := clientSet.CoreV1().Pods(nameSpace).List(metav1.ListOptions{})
 	common.CheckError(err)
 	return podList
 }
 
 // 获取指定命名空间中的指定Pod
-func GetSpecPod(clientSet *kubernetes.Clientset, nameSpace string, podName string) (pod * v1.Pod) {
-	pod, err := clientSet.CoreV1().Pods(nameSpace).Get(podName,metav1.GetOptions{})
+func GetSpecPod(clientSet *kubernetes.Clientset, nameSpace string, podName string) (pod *v1.Pod) {
+	pod, err := clientSet.CoreV1().Pods(nameSpace).Get(podName, metav1.GetOptions{})
 	common.CheckError(err)
 	return pod
 }
 
 // 更新Pod
-func UpdateSpecPod(clientSet *kubernetes.Clientset, nameSpace string, pod * v1.Pod) bool {
+func UpdateSpecPod(clientSet *kubernetes.Clientset, nameSpace string, pod *v1.Pod) bool {
 	_, err := clientSet.CoreV1().Pods(nameSpace).Update(pod)
 	return err != nil
 }

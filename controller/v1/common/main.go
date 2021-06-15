@@ -15,18 +15,19 @@ type BasicResponse struct {
 
 func SuccessResponse(ctx iris.Context, data interface{}) {
 	ctx.StatusCode(iris.StatusOK)
-	_, _ = ctx.JSON(BasicResponse{
+	//ctx.AddCookieOptions()
+	ctx.JSON(BasicResponse{
 		Code:    CodeSuccess,
 		Message: ctx.Tr("SUCCESS"),
 		Data:    data,
 	})
 }
 
-// 客户端错误响应
+// Client Error Response
 // ----------------------------------------------------------------------------------
 func ParamErrorResponse(ctx iris.Context, msg string) {
 	ctx.StatusCode(iris.StatusOK)
-	_, _ = ctx.JSON(BasicResponse{Code: CodeParamError, Message: ctx.Tr(msg)})
+	ctx.JSON(BasicResponse{Code: CodeParamError, Message: ctx.Tr(msg)})
 	return
 }
 
@@ -52,19 +53,19 @@ func FormErrorResponse(ctx iris.Context, err error) {
 		msg = ctx.Tr("PARAM_ERROR")
 	}
 	ctx.StatusCode(iris.StatusOK)
-	_, _ = ctx.JSON(BasicResponse{Code: CodeParamError, Message: msg})
+	ctx.JSON(BasicResponse{Code: CodeParamError, Message: msg})
 }
 
 // Server Error Response
 // ----------------------------------------------------------------------------------
 func DatabaseErrorResponse(ctx iris.Context) {
 	ctx.StatusCode(iris.StatusInternalServerError)
-	_, _ = ctx.JSON(BasicResponse{Code: CodeDBError, Message: ctx.Tr("SERVER_ERROR")})
+	ctx.JSON(BasicResponse{Code: CodeDBError, Message: ctx.Tr("SERVER_ERROR")})
 	return
 }
 
 func EncryptErrorResponse(ctx iris.Context) {
 	ctx.StatusCode(iris.StatusInternalServerError)
-	_, _ = ctx.JSON(BasicResponse{Code: CodeEncryptError, Message: ctx.Tr("SERVER_ERROR")})
+	ctx.JSON(BasicResponse{Code: CodeEncryptError, Message: ctx.Tr("SERVER_ERROR")})
 	return
 }

@@ -1,44 +1,44 @@
 package user
 
 import (
-	"SNNClusterManagementSystem/controller/v1/common"
-	"SNNClusterManagementSystem/service"
+	"snns_srv/controller/v1/common"
+	"snns_srv/service"
 
 	"github.com/kataras/iris/v12"
 )
 
+// LoginRequest -
 type LoginRequest struct {
-	Account  string `json:"account"  validate:"required"`
-	Password string `json:"password" validate:"required"`
-}
-
-type LoginResponseData struct {
-	Uid      string `json:"uid"`
 	Username string `json:"username"`
-	Role     int    `json:"role"`
+	Password string `json:"password"`
 }
 
-func Login(ctx iris.Context) {
+//LoginResponseData -
+type LoginResponseData struct {
+	UID       string `json:"uid"`
+	Username  string `json:"username"`
+	RoleSys   bool   `json:"rolesys"`
+	RoleAdmin bool   `json:"roleadmin"`
+}
 
+// Login -
+func Login(ctx iris.Context) {
 	var req LoginRequest
 	if err := ctx.ReadJSON(&req); err != nil {
 		common.FormErrorResponse(ctx, err)
 		return
 	}
 
-	// 根据账号获取数据库中用户对象
-	user := service.GetUserByAccount(req.Account)
-	// 查看请求的密码和数据库中的密码是否一样
+	user := service.GetUserByAccount(req.Username)
 	if !user.CheckPassword(req.Password) {
 		common.ParamErrorResponse(ctx, "PASSWORD_ERROR")
 		return
 	}
-
-	// 一样的话创建登陆会话
-	service.SetLoginSession(ctx, user.Uid)
+	service.SetLoginSession(ctx, user.UID)
 	common.SuccessResponse(ctx, LoginResponseData{
-		Uid:      user.Uid.Hex(),
-		Username: user.Username,
-		Role:     user.Role,
+		UID:       user.UID.Hex(),
+		Username:  user.Username,
+		RoleSys:   user.RoleSys,
+		RoleAdmin: user.RoleAdmin,
 	})
 }

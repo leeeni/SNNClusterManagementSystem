@@ -1,35 +1,36 @@
 package k8s_opt
 
 import (
-	"SNNClusterManagementSystem/ScriptsK8S/common"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"snns_srv/ScriptsK8S/common"
+	"time"
+
 	appsv1 "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	yaml2 "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/kubernetes"
-	"time"
 )
 
 // 获取指定命名空间中指定的deployment
-func GetSpecDeployment(clientSet *kubernetes.Clientset,deploymentName string, nameSpace string) (deployment * appsv1.Deployment)  {
+func GetSpecDeployment(clientSet *kubernetes.Clientset, deploymentName string, nameSpace string) (deployment *appsv1.Deployment) {
 	deployment, err := clientSet.AppsV1().Deployments(nameSpace).Get(deploymentName, metav1.GetOptions{})
 	common.CheckError(err)
 	return
 }
 
 // 获取指定命名空间中的所有deployment
-func GetSpecAllDeployment(clientSet *kubernetes.Clientset, nameSpace string) (deployments * appsv1.DeploymentList) {
+func GetSpecAllDeployment(clientSet *kubernetes.Clientset, nameSpace string) (deployments *appsv1.DeploymentList) {
 	deployments, err := clientSet.AppsV1().Deployments(nameSpace).List(metav1.ListOptions{})
 	common.CheckError(err)
 	return
 }
 
 // 获取所有deployment
-func GetAllDeployment(clientSet *kubernetes.Clientset) (deployments * appsv1.DeploymentList) {
+func GetAllDeployment(clientSet *kubernetes.Clientset) (deployments *appsv1.DeploymentList) {
 	deployments, err := clientSet.AppsV1().Deployments("").List(metav1.ListOptions{})
 	common.CheckError(err)
 	return
@@ -63,7 +64,7 @@ func CreatePynnDeployment(clientSet *kubernetes.Clientset, ClientName string, na
 }
 
 // 更新deployment的replicas
-func UpdateDeploymentReplicas(clientSet *kubernetes.Clientset, deployment * appsv1.Deployment, nameSpace string, replicas int32) (flag bool) {
+func UpdateDeploymentReplicas(clientSet *kubernetes.Clientset, deployment *appsv1.Deployment, nameSpace string, replicas int32) (flag bool) {
 	// 修改replicas数量
 	deployment.Spec.Replicas = &replicas
 	// 查询k8s是否有该deployment
@@ -109,7 +110,7 @@ func UpdateDeploymentReplicas(clientSet *kubernetes.Clientset, deployment * apps
 }
 
 // 更新deployment的pods
-func UpdateDeploymentPods(clientSet *kubernetes.Clientset, deployment * appsv1.Deployment, nameSpace string, container v1.Container, option string) (flag bool) {
+func UpdateDeploymentPods(clientSet *kubernetes.Clientset, deployment *appsv1.Deployment, nameSpace string, container v1.Container, option string) (flag bool) {
 	var TmpContainers []v1.Container
 	var AddContainers []v1.Container
 	var UpdateContainers []v1.Container
@@ -171,7 +172,7 @@ func DeleteSpecDeployment(clientSet *kubernetes.Clientset, deployName string, na
 		panic("deployment doesnt exist")
 	} else {
 		// 已存在则删除
-		if err := clientSet.AppsV1().Deployments(nameSpace).Delete(deployName,&metav1.DeleteOptions{}); err != nil {
+		if err := clientSet.AppsV1().Deployments(nameSpace).Delete(deployName, &metav1.DeleteOptions{}); err != nil {
 			flag = false
 			panic(err)
 		}

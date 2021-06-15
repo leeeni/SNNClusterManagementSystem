@@ -9,7 +9,7 @@ spec:
   restartPolicy: Always
   containers:
     - name: pynn-
-      image: registry.cn-hangzhou.aliyuncs.com/lvyi/pynn:1.1.2
+      image: registry.cn-hangzhou.aliyuncs.com/lvyi/pynn:1.1.4
       imagePullPolicy: IfNotPresent
       workingDir: /home/containerData/
       volumeMounts:
@@ -19,6 +19,9 @@ spec:
         requests:
           cpu: 1
           memory: 256Mi
+      ports: 
+        - containerPort: 8888
+          hostPort: 8899
   volumes:
     - name: pynn
       hostPath:

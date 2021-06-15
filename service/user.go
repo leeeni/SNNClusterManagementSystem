@@ -1,42 +1,44 @@
 package service
 
 import (
-	"SNNClusterManagementSystem/repository"
-
-	"strings"
+	"snns_srv/repository"
+	//	"strings"
 )
 
-// 检索
+//CheckUserExistByUsername ：
 func CheckUserExistByUsername(username string) (bool, error) {
 	return repository.CheckExistByUsername(username)
 }
 
-// 检索
+//CheckUserExistByEmail :
 func CheckUserExistByEmail(email string) (bool, error) {
 	return repository.CheckExistByEmail(email)
 }
 
-// 增
+//InsertUser :
 func InsertUser(user *repository.User) error {
 	return repository.InsertUser(user)
 }
 
-// 查
+//SelectUser :
+// func SelectNode(pageindex int ,pagerows int) ([]repository.Node,int, error) {
+func SelectUser() ([]repository.User, error) {
+	print("Enter Service SelectUser!")
+	return repository.GetUserAll()
+}
+
+//GetUserByAccount :
 func GetUserByAccount(account string) (user repository.User) {
-	if strings.Contains(account, "@") {
-		user = repository.GetUserByEmail(account)
-	} else {
-		user = repository.GetUserByUsername(account)
-	}
-	return
+	// if strings.Contains(account, "@") {
+	// 	user = repository.GetUserByEmail(account)
+	// } else {
+	user = repository.GetUserByUsername(account)
+	// }
+	return user
 }
 
-// 改
-func UpdateUser(user repository.User) error {
-	return repository.UpdateUser(user)
-}
-
-// 删
-func DeleteUser(user repository.User) error {
-	return repository.DeleteUser(user)
+// DelUser :
+func DelUser(id string) error {
+	print("Enter Service DelUser!")
+	return repository.DelUser(id)
 }

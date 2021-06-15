@@ -1,0 +1,76 @@
+Date : 2020-12-17 13:17:50
+Directory : c:\Boxs\Tmp\cygo-iris
+Total : 27 files,  745 codes, 36 comments, 196 blanks, all 977 lines
+
+Languages
++--------------+------------+------------+------------+------------+------------+
+| language     | files      | code       | comment    | blank      | total      |
++--------------+------------+------------+------------+------------+------------+
+| Go           |         18 |        427 |         35 |        117 |        579 |
+| Markdown     |          1 |        207 |          0 |         61 |        268 |
+| Ini          |          4 |         47 |          0 |          6 |         53 |
+| YAML         |          1 |         24 |          0 |          0 |         24 |
+| Docker       |          1 |         17 |          0 |          6 |         23 |
+| XML          |          1 |         15 |          0 |          3 |         18 |
+| Shell Script |          1 |          8 |          1 |          3 |         12 |
++--------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                            |         27 |        745 |         36 |        196 |        977 |
+| assets                                                       |          4 |         47 |          0 |          6 |         53 |
+| assets\locale                                                |          4 |         47 |          0 |          6 |         53 |
+| assets\locale\en-US                                          |          2 |         24 |          0 |          3 |         27 |
+| assets\locale\zh-CN                                          |          2 |         23 |          0 |          3 |         26 |
+| cmd                                                          |          3 |         49 |          1 |          9 |         59 |
+| cmd\docker                                                   |          2 |         25 |          1 |          9 |         35 |
+| cmd\docker-compose                                           |          1 |         24 |          0 |          0 |         24 |
+| controller                                                   |          5 |        172 |          5 |         38 |        215 |
+| controller\v1                                                |          5 |        172 |          5 |         38 |        215 |
+| controller\v1\common                                         |          2 |         66 |          4 |         14 |         84 |
+| controller\v1\user                                           |          3 |        106 |          1 |         24 |        131 |
+| repository                                                   |          3 |        106 |          9 |         29 |        144 |
+| route                                                        |          1 |         18 |          0 |          4 |         22 |
+| service                                                      |          3 |         38 |          0 |         13 |         51 |
+| session                                                      |          1 |         27 |          2 |          7 |         36 |
+| util                                                         |          4 |         41 |          1 |         17 |         59 |
+| util\i18n                                                    |          1 |         10 |          0 |          4 |         14 |
+| util\log                                                     |          1 |          5 |          0 |          3 |          8 |
+| util\validator                                               |          2 |         26 |          1 |         10 |         37 |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| filename                                                     | language     | code       | comment    | blank      | total      |
++--------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| c:\Boxs\Tmp\cygo-iris\Readme.md                              | Markdown     |        207 |          0 |         61 |        268 |
+| c:\Boxs\Tmp\cygo-iris\assets\locale\en-US\default.ini        | Ini          |         11 |          0 |          1 |         12 |
+| c:\Boxs\Tmp\cygo-iris\assets\locale\en-US\validator.ini      | Ini          |         13 |          0 |          2 |         15 |
+| c:\Boxs\Tmp\cygo-iris\assets\locale\zh-CN\default.ini        | Ini          |         10 |          0 |          1 |         11 |
+| c:\Boxs\Tmp\cygo-iris\assets\locale\zh-CN\validator.ini      | Ini          |         13 |          0 |          2 |         15 |
+| c:\Boxs\Tmp\cygo-iris\cmd\docker-compose\docker-compose.yaml | YAML         |         24 |          0 |          0 |         24 |
+| c:\Boxs\Tmp\cygo-iris\cmd\docker\Dockerfile                  | Docker       |         17 |          0 |          6 |         23 |
+| c:\Boxs\Tmp\cygo-iris\cmd\docker\build.sh                    | Shell Script |          8 |          1 |          3 |         12 |
+| c:\Boxs\Tmp\cygo-iris\controller\v1\common\error_code.go     | Go           |          9 |          0 |          4 |         13 |
+| c:\Boxs\Tmp\cygo-iris\controller\v1\common\main.go           | Go           |         57 |          4 |         10 |         71 |
+| c:\Boxs\Tmp\cygo-iris\controller\v1\user\login.go            | Go           |         33 |          0 |          7 |         40 |
+| c:\Boxs\Tmp\cygo-iris\controller\v1\user\logout.go           | Go           |         12 |          0 |          6 |         18 |
+| c:\Boxs\Tmp\cygo-iris\controller\v1\user\register.go         | Go           |         61 |          1 |         11 |         73 |
+| c:\Boxs\Tmp\cygo-iris\go.mod                                 | XML          |         15 |          0 |          3 |         18 |
+| c:\Boxs\Tmp\cygo-iris\main.go                                | Go           |         25 |         18 |          9 |         52 |
+| c:\Boxs\Tmp\cygo-iris\repository\common.go                   | Go           |         31 |          5 |          9 |         45 |
+| c:\Boxs\Tmp\cygo-iris\repository\init.go                     | Go           |         21 |          2 |          8 |         31 |
+| c:\Boxs\Tmp\cygo-iris\repository\user.go                     | Go           |         54 |          2 |         12 |         68 |
+| c:\Boxs\Tmp\cygo-iris\route\route.go                         | Go           |         18 |          0 |          4 |         22 |
+| c:\Boxs\Tmp\cygo-iris\service\common.go                      | Go           |          1 |          0 |          1 |          2 |
+| c:\Boxs\Tmp\cygo-iris\service\session.go                     | Go           |         15 |          0 |          5 |         20 |
+| c:\Boxs\Tmp\cygo-iris\service\user.go                        | Go           |         22 |          0 |          7 |         29 |
+| c:\Boxs\Tmp\cygo-iris\session\init.go                        | Go           |         27 |          2 |          7 |         36 |
+| c:\Boxs\Tmp\cygo-iris\util\i18n\init.go                      | Go           |         10 |          0 |          4 |         14 |
+| c:\Boxs\Tmp\cygo-iris\util\log\logger.go                     | Go           |          5 |          0 |          3 |          8 |
+| c:\Boxs\Tmp\cygo-iris\util\validator\init.go                 | Go           |         12 |          1 |          4 |         17 |
+| c:\Boxs\Tmp\cygo-iris\util\validator\regex.go                | Go           |         14 |          0 |          6 |         20 |
+| Total                                                        |              |        745 |         36 |        196 |        977 |
++--------------------------------------------------------------+--------------+------------+------------+------------+------------+

@@ -1,17 +1,17 @@
 package service
 
 import (
-	"github.com/joho/godotenv"
 	"net/url"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 // token的respond格式
 type TokenData struct {
-	AccessToken      string `json:"access_token"`
-	RefreshToken     string `json:"refresh_token"`
-	TokenType        string  `json:"token_type"`
-	ExpiresIn        float64  `json:"expires_in"`
+	AccessToken string  `json:"access_token"`
+	TokenType   string  `json:"token_type"`
+	ExpiresIn   float64 `json:"expires_in"`
 }
 
 // 用户登录获取token
@@ -30,13 +30,12 @@ func GetToken(username string, password string) (TokenData, error) {
 	data["password"] = []string{password}
 	data["scope"] = []string{"read"}
 	// 发送Http
-	respondStruct,err := HttpPost("http://192.168.202.71:31441/oauth/token",data,"application/x-www-form-urlencoded")
-	if respondStruct["error"] != nil{
+	respondStruct, err := HttpPost(os.Getenv("USERCENTER_ADDR")+"/oauth/token", data, "application/x-www-form-urlencoded")
+	if respondStruct["error"] != nil || respondStruct == nil {
 		return tokenRespond, err
 	}
 	// 整合成token响应对象
 	tokenRespond.AccessToken = respondStruct["access_token"].(string)
-	tokenRespond.RefreshToken = respondStruct["refresh_token"].(string)
 	tokenRespond.TokenType = respondStruct["token_type"].(string)
 	tokenRespond.ExpiresIn = respondStruct["expires_in"].(float64)
 
@@ -49,22 +48,23 @@ type UserInfoResponse struct {
 	Message string   `json:"message"`
 	Data    UserInfo `json:"data"`
 }
+
 // userInfo的respond格式
 type UserInfo struct {
-	UserId         int         `json:"userId"`
-	Uid            string         `json:"uid"`
-	Username       string         `json:"username"`
-	RealName       string         `json:"realName"`
-	Tutor          string         `json:"tutor"`
-	Avatar         string         `json:"avatar"`
-	Phone          string         `json:"phone"`
-	Email          string         `json:"email"`
-	Sex            int            `json:"sex"`
-	Locked         int            `json:"locked"`
-	Ctime          int            `json:"ctime"`
-	Description    string         `json:"description"`
-	OrganizationId string         `json:"organizationId"`
-	InnerAccount   string         `json:"innerAccount"`
+	UserId         int    `json:"userId"`
+	Uid            string `json:"uid"`
+	Username       string `json:"username"`
+	RealName       string `json:"realName"`
+	Tutor          string `json:"tutor"`
+	Avatar         string `json:"avatar"`
+	Phone          string `json:"phone"`
+	Email          string `json:"email"`
+	Sex            int    `json:"sex"`
+	Locked         int    `json:"locked"`
+	Ctime          int    `json:"ctime"`
+	Description    string `json:"description"`
+	OrganizationId string `json:"organizationId"`
+	InnerAccount   string `json:"innerAccount"`
 }
 
 // 组织信息
@@ -78,14 +78,14 @@ type Organization struct {
 	Ctime          string `json:"ctime"`
 }
 
-func GetUserInfo(token string)  (UserInfo, error)  {
+func GetUserInfo(token string) (UserInfo, error) {
 
 	var UserInfoRespond UserInfo
 	var basicResponse UserInfoResponse
 
 	// 发送Http
-	respondStruct,err := HttpGet("http://192.168.202.71:31441/api/user/",token)
-	if respondStruct["error"] != nil{
+	respondStruct, err := HttpGet("http://192.168.202.73:31441/api/user/", token)
+	if respondStruct["error"] != nil {
 		return UserInfoRespond, err
 	}
 	// 整合成整体响应对象
@@ -96,47 +96,47 @@ func GetUserInfo(token string)  (UserInfo, error)  {
 	UserInfoRespond.UserId = int(data["userId"].(float64))
 	UserInfoRespond.Uid = data["uid"].(string)
 	UserInfoRespond.Username = data["username"].(string)
-	if data["realName"] == nil{
+	if data["realName"] == nil {
 		UserInfoRespond.RealName = ""
-	}else {
+	} else {
 		UserInfoRespond.RealName = data["realName"].(string)
 	}
-	if data["tutor"] == nil{
+	if data["tutor"] == nil {
 		UserInfoRespond.Tutor = ""
-	}else {
+	} else {
 		UserInfoRespond.Tutor = data["tutor"].(string)
 	}
-	if data["avatar"] == nil{
+	if data["avatar"] == nil {
 		UserInfoRespond.Avatar = ""
-	}else {
+	} else {
 		UserInfoRespond.Avatar = data["avatar"].(string)
 	}
-	if data["phone"] == nil{
+	if data["phone"] == nil {
 		UserInfoRespond.Phone = ""
-	}else {
+	} else {
 		UserInfoRespond.Phone = data["phone"].(string)
 	}
-	if data["email"] == nil{
+	if data["email"] == nil {
 		UserInfoRespond.Email = ""
-	}else {
+	} else {
 		UserInfoRespond.Email = data["email"].(string)
 	}
 	UserInfoRespond.Sex = int(data["sex"].(float64))
 	UserInfoRespond.Locked = int(data["locked"].(float64))
 	UserInfoRespond.Ctime = int(data["ctime"].(float64))
-	if data["description"] == nil{
+	if data["description"] == nil {
 		UserInfoRespond.Description = ""
-	}else {
+	} else {
 		UserInfoRespond.Description = data["description"].(string)
 	}
-	if data["innerAccount"] == nil{
+	if data["innerAccount"] == nil {
 		UserInfoRespond.InnerAccount = ""
-	}else {
+	} else {
 		UserInfoRespond.InnerAccount = data["innerAccount"].(string)
 	}
-	if data["organizationId"] == nil{
+	if data["organizationId"] == nil {
 		UserInfoRespond.OrganizationId = ""
-	}else {
+	} else {
 		UserInfoRespond.OrganizationId = data["organizationId"].(string)
 	}
 	return UserInfoRespond, err

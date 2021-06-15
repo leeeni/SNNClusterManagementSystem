@@ -31,6 +31,5 @@ func ConnectRedis() {
 		CookieSecureTLS: true,
 	})
 
-	// 使用redis数据库来记录session
 	Sess.UseDatabase(db)
 }

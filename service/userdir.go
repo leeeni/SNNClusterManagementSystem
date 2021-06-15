@@ -1,9 +1,8 @@
 package service
 
 import (
-	"SNNClusterManagementSystem/ScriptsK8S/k8s_opt"
-
-	"SNNClusterManagementSystem/repository"
+	"snns_srv/ScriptsK8S/k8s_opt"
+	"snns_srv/repository"
 )
 
 // 在服务器上创建目录
@@ -28,7 +27,7 @@ func InsertUserDir(userdir *repository.UserDir) error {
 
 // 通过用户名获取用户目录信息
 func GetUserDirByUsername(username string) (userdir repository.UserDir) {
-		userdir = repository.GetUserDirByUsername(username)
+	userdir = repository.GetUserDirByUsername(username)
 	return
 }
 

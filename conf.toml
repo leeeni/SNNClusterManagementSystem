@@ -1,0 +1,12 @@
+name = "Node_7ddce9"
+hostid = "b8d7b1e9-4faf-4212-95ef-5c54b76289da"
+hostname = "SNN00"
+
+
+[tsdb]
+#server = "192.168.56.200"
+server = "192.168.204.121"
+port = 8086
+user = ""
+pwd = "" 
+

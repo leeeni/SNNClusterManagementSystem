@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	"SNNClusterManagementSystem/util/log"
+	"snns_srv/util/log"
 
 	"fmt"
 )

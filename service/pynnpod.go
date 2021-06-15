@@ -1,14 +1,12 @@
 package service
 
 import (
-	"SNNClusterManagementSystem/ScriptsK8S/common"
-	"SNNClusterManagementSystem/ScriptsK8S/k8s_opt"
-	"SNNClusterManagementSystem/repository"
+	"snns_srv/ScriptsK8S/common"
+	"snns_srv/ScriptsK8S/k8s_opt"
+	"snns_srv/repository"
 
 	v1 "k8s.io/api/core/v1"
 )
-
-
 
 func CheckPodExistByUsername(username string) (bool, error) {
 	return repository.CheckPodExistByUsername(username)
@@ -28,25 +26,24 @@ func GetPodByUsername(username string) (pod repository.PynnPod) {
 }
 
 // 在服务器上创建Pod
-func BuildPod(username string) bool {
-	clientset,err := common.InitClient()
+func BuildPod(username string, HostPort int32) bool {
+	clientset, err := common.InitClient()
 	common.CheckError(err)
-	return k8s_opt.CreatePynnPod(clientset,username,"pynn-clients")
+	return k8s_opt.CreatePynnPod(clientset, username, "pynn-clients", HostPort)
 }
-
 
 // 创建服务器上的pod，带cpu和memory信息的
 func BuildPodByCpuAndMemoryFromServer(username string, cpu int64, memory int64) bool {
-	clientset,err := common.InitClient()
+	clientset, err := common.InitClient()
 	common.CheckError(err)
-	return k8s_opt.CreatePynnPodUpdateCpuAndMemory(clientset,username,"pynn-clients",cpu,memory)
+	return k8s_opt.CreatePynnPodUpdateCpuAndMemory(clientset, username, "pynn-clients", cpu, memory)
 }
 
 // 在服务器上获取Pod
-func GetPodByUsernameFromServer(username string)  * v1.Pod  {
-	clientset,err := common.InitClient()
+func GetPodByUsernameFromServer(username string) *v1.Pod {
+	clientset, err := common.InitClient()
 	common.CheckError(err)
-	pod := k8s_opt.GetSpecPod(clientset,"pynn-clients","pynn-pod-"+username)
+	pod := k8s_opt.GetSpecPod(clientset, "pynn-clients", "pynn-pod-"+username)
 	return pod
 }
 
@@ -57,22 +54,20 @@ func DeletePodFromDB(username string) error {
 
 // 服务器上删除目录
 func DeletPodFromServer(username string) bool {
-	podname := "pynn-pod-"+username
-	clientset,err := common.InitClient()
+	podname := "pynn-pod-" + username
+	clientset, err := common.InitClient()
 	common.CheckError(err)
 	return k8s_opt.DeleteSpecPod(clientset, podname, "pynn-clients")
 }
 
 // 更新服务器上的pod
-func UpdatePodFromServer(pod * v1.Pod) bool {
-	clientset,err := common.InitClient()
+func UpdatePodFromServer(pod *v1.Pod) bool {
+	clientset, err := common.InitClient()
 	common.CheckError(err)
-	return k8s_opt.UpdateSpecPod(clientset,"pynn-clients", pod)
+	return k8s_opt.UpdateSpecPod(clientset, "pynn-clients", pod)
 }
 
 // 更新数据库上的pod
 func UpdatePodFromDB(pod repository.PynnPod) bool {
 	return repository.UpdatePod(pod) != nil
 }
-
-

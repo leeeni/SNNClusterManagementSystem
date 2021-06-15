@@ -6,7 +6,7 @@ import (
 
 func BuildClientDir(ClientName string) (flag bool) {
 	ClientDir := "/home/work/ClientDir/"
-	clientPath := ClientDir+ClientName
+	clientPath := ClientDir + ClientName
 
 	// 查看路径是否存在
 	IsNotExist := CheckDirExit(clientPath)
@@ -14,8 +14,8 @@ func BuildClientDir(ClientName string) (flag bool) {
 	// 创建文件夹
 	if IsNotExist == false {
 		// 如果不存在，则创建
-		_ = os.MkdirAll(clientPath, 0755)
-	}else {
+		_ = os.MkdirAll(clientPath, 0777)
+	} else {
 		// 如果存在，则报错
 		flag = false
 		return flag
@@ -26,7 +26,7 @@ func BuildClientDir(ClientName string) (flag bool) {
 		// 如果不存在，则创建失败
 		flag = false
 		return flag
-	}else {
+	} else {
 		flag = true
 	}
 	return flag
@@ -36,7 +36,7 @@ func DeleteClientDir(ClientName string) (flag bool) {
 	// 本质不是删除是移动到垃圾回收站
 
 	ClientDir := "/home/work/ClientDir/"
-	clientPath := ClientDir+ClientName
+	clientPath := ClientDir + ClientName
 
 	// 查看路径是否存在
 	IsNotExist := CheckDirExit(clientPath)
@@ -46,7 +46,7 @@ func DeleteClientDir(ClientName string) (flag bool) {
 		// 如果不存在，则报错
 		flag = false
 		return flag
-	}else {
+	} else {
 		// 如果存在，则移动
 		_ = os.RemoveAll(clientPath)
 	}
@@ -56,14 +56,13 @@ func DeleteClientDir(ClientName string) (flag bool) {
 		// 如果不存在，则移动成功
 		flag = true
 
-	}else {
+	} else {
 		// 如果存在，则返回错误
 		flag = false
 		return flag
 	}
 	return flag
 }
-
 
 func CheckDirExit(path string) bool {
 	/*
@@ -79,9 +78,5 @@ func CheckDirExit(path string) bool {
 	if os.IsNotExist(err) {
 		return false
 	}
-	panic(err)
 	return false
 }
-
-
-

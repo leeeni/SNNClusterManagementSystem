@@ -1,33 +1,32 @@
 package repository
 
 import (
-	"SNNClusterManagementSystem/util/log"
+	"snns_srv/db"
+	"snns_srv/util/log"
 
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 )
 
-const (
-	NormalUser = 0
-	Admin      = 1
-	SuperAdmin = 2
-)
-
-// 与数据库表对应的user结构体
+//User :用户数据
 type User struct {
 	// Uid: Primary key (_id)
-	Uid         bson.ObjectId `bson:"_id,omitempty"`
-	Email       string        `bson:"email"`
-	Verified    bool          `bson:"verified"`
-	Username    string        `bson:"username"`
-	Password    string        `bson:"password"`
-	CreatedTime int64         `bson:"created_time"`
-	LastLogin   int64         `bson:"last_login"`
-	Role        int           `bson:"role"`
-	IsBanned    bool          `bson:"is_banned"`
+	UID      bson.ObjectId `bson:"_id,omitempty"`
+	Email    string        `bson:"email"`
+	Verified bool          `bson:"verified"`
+	Username string        `bson:"username"`
+	Password string        `bson:"password"`
+	// CreatedTime and LastLogin use timestamp.
+	CreatedTime int64 `bson:"created_time"`
+	LastLogin   int64 `bson:"last_login"`
+	RoleSys     bool  `bson:"rolesys"`
+	RoleAdmin   bool  `bson:"roleadmin"`
+	State       int   `bson:"state"`
+	IsPclUser   bool  `bson:"is_pcluser"`
+	// State => 0:NewReg , 1:Active , 2: Inactive
 }
 
-// user的成员函数
+//SetPassword :
 func (user *User) SetPassword(password string) error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	if err != nil {
@@ -38,47 +37,50 @@ func (user *User) SetPassword(password string) error {
 	return nil
 }
 
+//CheckPassword :
 func (user *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	return err == nil
 }
 
-// 检索
+//CheckExistByUsername :
 func CheckExistByUsername(username string) (bool, error) {
-	return Has(UserCollection, bson.M{"username": username})
+	return Has(db.UserCollection, bson.M{"username": username})
 }
-// 检索
+
+//CheckExistByEmail :
 func CheckExistByEmail(email string) (bool, error) {
-	return Has(UserCollection, bson.M{"email": email})
+	return Has(db.UserCollection, bson.M{"email": email})
 }
 
-// 增
+//InsertUser :
 func InsertUser(user *User) error {
-	return Insert(UserCollection, user)
+	return Insert(db.UserCollection, user)
 }
 
-// 查
+//GetUserAll :
+func GetUserAll() ([]User, error) {
+	var users []User
+	// err := NodeCollection.Find(nil).Limit(pagerows).All(&nodes)
+	err := db.UserCollection.Find(nil).All(&users)
+	return users, err
+}
+
+//GetUserByUsername :
 func GetUserByUsername(username string) User {
 	user := User{}
-	GetByQ(UserCollection, bson.M{"username": username}, &user)
+	GetByQ(db.UserCollection, bson.M{"username": username}, &user)
 	return user
 }
 
-// 查
+//GetUserByEmail :
 func GetUserByEmail(email string) User {
 	user := User{}
-	GetByQ(UserCollection, bson.M{"email": email}, &user)
+	GetByQ(db.UserCollection, bson.M{"email": email}, &user)
 	return user
 }
 
-// 改
-func UpdateUser(user User) error {
-	err := UserCollection.Update(bson.M{"_id": user.Uid}, user)
-	return err
-}
-
-// 删
-func DeleteUser(user User) error {
-	err := UserCollection.Remove( bson.M{"_id": user.Uid})
-	return err
+//DelUser :
+func DelUser(id string) error {
+	return DelByID(db.UserCollection, id)
 }
